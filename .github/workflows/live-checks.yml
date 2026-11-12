@@ -1,0 +1,32 @@
+name: Live checks
+
+# Depends on third-party sites, registries and a second dependency install,
+# so it never gates a push. Run it manually before a release; the monthly run
+# reports when the dated research has gone stale.
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 6 3 * *"
+
+permissions:
+  contents: read
+
+jobs:
+  live:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: npm run check:sources
+        if: always()
+      - run: npm run check:links
+        if: always()
+      - run: npm run check:v3
+        if: always()
+      - run: npm run check:install
+        if: always()

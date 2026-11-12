@@ -1,0 +1,33 @@
+{
+  "name": "react-native-skia-skills",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Version-aware React Native Skia agent skill with verified graphics examples",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "validate": "node scripts/validate.mjs",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test tests/*.test.mjs",
+    "check": "npm run validate && npm run typecheck && npm test",
+    "check:links": "node scripts/check-links.mjs",
+    "check:sources": "node scripts/check-sources.mjs",
+    "check:v3": "node scripts/check-v3.mjs",
+    "check:install": "node scripts/check-install.mjs",
+    "test:graphics": "node --test tests/graphics.test.mjs"
+  },
+  "devDependencies": {
+    "@shopify/react-native-skia": "2.14.0",
+    "@types/react": "19.3.0",
+    "react": "19.3.0",
+    "react-native": "0.88.1",
+    "react-native-gesture-handler": "3.5.0",
+    "react-native-reanimated": "4.7.1",
+    "react-native-worklets": "0.13.0",
+    "typescript": "6.0.3",
+    "yaml": "2.8.2"
+  }
+}

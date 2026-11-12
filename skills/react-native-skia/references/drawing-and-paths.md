@@ -1,0 +1,11 @@
+# Drawing, paths and coordinates
+
+Use `Skia.Path.MakeFromSVGString` for fixed SVG geometry and handle its nullable result. For the pinned releases, use `Skia.PathBuilder.Make()` to construct geometry, then `build()` to produce a path. Older examples mutate `Skia.Path.Make()` directly; do not copy that pattern without checking the installed types. Keep a builder local to the operation/runtime that owns it. Repeated construction is a profiling lead, not proof of a leak.
+
+`Path` supports stroke/fill, trim (`start`/`end`), caps and joins. A trim animates visible length without changing path topology; [PathReveal](../examples/PathReveal.tsx) uses that simpler approach. Morphing with `usePathInterpolation` requires matching command types and counts, not merely similar point counts or bounding boxes. If paths differ, change the design or normalize deliberately; do not silently add a morphing dependency. `usePathValue` has version-sensitive builder/path semantics; inspect its signature before writing a mutating callback.
+
+Skia Group transform origins default to the top-left and angles use radians. An explicit `origin` is local and is not inherited. Transform order is significant; test a known landmark through the forward and inverse transform. A camera should have one explicit mapping, for example `screen = (world - camera) * zoom + offset`. Convert input with the inverse. Distinguish canvas-local, screen/window, world and source-image coordinates.
+
+Use a clip with the intended local transform; diagnose by temporarily drawing its boundary. An inverse clip or fill rule can invert the visible region. Balance imperative `save()`/`restore()` calls; use `try/finally` around code that may exit early. Path effects such as dashes and corners modify stroking; validate their interaction with trim and stroke width on-device.
+
+Sources: [paths](https://wcandillon.github.io/react-native-skia/v2/docs/shapes/path/), [Group](https://wcandillon.github.io/react-native-skia/v2/docs/group/), [path hooks](https://wcandillon.github.io/react-native-skia/v2/docs/animations/hooks/), [path effects](https://wcandillon.github.io/react-native-skia/v2/docs/path-effects/). Camera algebra is general geometry.

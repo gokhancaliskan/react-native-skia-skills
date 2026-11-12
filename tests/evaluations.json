@@ -1,0 +1,1300 @@
+{
+  "purpose": "Behavioural evaluation cases for the react-native-skia skill. Projects are synthetic descriptions; create a throwaway fixture that matches each one. See docs/VALIDATION.md for the procedure and scoring.",
+  "scoring": "For each task, score every expected item as met or not met and every mustNot item as avoided or violated, from the transcript and the resulting diff. Report counts, not impressions.",
+  "tasks": [
+    {
+      "id": "pulse-on-new-message",
+      "scenario": "new-animation",
+      "project": "Bare React Native 0.88 app. @shopify/react-native-skia 2.14.0, Reanimated 4.7.1, Worklets 0.13.0. A Canvas already draws a static unread badge.",
+      "prompt": "Make the unread badge pulse once when a new message arrives. Some of our users have reduced motion enabled.",
+      "expected": [
+        "Reads the manifest and lockfile for the resolved Skia, Reanimated and Worklets versions before writing code",
+        "Passes a shared or derived value directly to a Skia prop instead of reading .value during render",
+        "Runs a finite animation and cancels it on unmount or when the trigger changes",
+        "Honours reduced motion and states that useReducedMotion is read at application start",
+        "Runs the project's own typecheck or tests and reports what could not be verified on a device"
+      ],
+      "mustNot": [
+        "Uses createAnimatedComponent or useAnimatedProps for a Skia node",
+        "Uses removed Skia value hooks such as useValue or runTiming",
+        "Adds an endless idle loop that was not requested",
+        "Installs or upgrades dependencies"
+      ],
+      "references": [
+        "references/animations-and-worklets.md",
+        "examples/AnimatedPulse.tsx"
+      ]
+    },
+    {
+      "id": "blank-canvas-after-upgrade",
+      "scenario": "debug-rendering",
+      "project": "Bare React Native app whose package.json now lists react-native-skia ^3.10.0 while imports still reference the scoped package in two files; android minSdkVersion is 24. iOS draws, Android is blank.",
+      "prompt": "After yesterday's upgrade the chart is blank on Android but fine on iOS. Fix it.",
+      "expected": [
+        "Identifies which Skia package and major are actually resolved, and notices the mixed package names",
+        "Connects the blank Android canvas to the documented v3 requirements (API level 26, Vulkan 1.1, native rebuild) as a likely cause, not a certainty",
+        "Proposes a minimal discriminating test such as a solid primitive with measured dimensions and a device capability check",
+        "Explains that staying on 2.x or raising the minimum SDK changes device reach, and asks before making that choice",
+        "Labels each finding as confirmed, likely, hypothesis or optional"
+      ],
+      "mustNot": [
+        "Reinstalls packages or deletes caches as a first response",
+        "Installs both Skia packages side by side",
+        "Silently downgrades or raises minSdkVersion without saying what it changes",
+        "Claims the fix is verified without an Android run"
+      ],
+      "references": [
+        "references/debugging.md",
+        "references/compatibility.md"
+      ]
+    },
+    {
+      "id": "stuttering-chart",
+      "scenario": "optimize-canvas",
+      "project": "Expo SDK 58 development build. A line chart component rebuilds its path from 2,000 points inside the component body on every React render; the parent re-renders on each scroll event. No profiling data is provided.",
+      "prompt": "Scrolling the screen with the price chart feels janky. Optimize the chart.",
+      "expected": [
+        "Locates the path construction in the render path and the parent re-render that triggers it, citing file locations",
+        "Presents the rebuild as a lead and asks for or proposes a measurement on a release or profile build before claiming a cause",
+        "Suggests the smallest change that preserves the visual result, such as memoising geometry on its real inputs",
+        "Describes how to compare before and after with the same input trace and reports frame statistics only from real captures",
+        "States which device measurements were not available"
+      ],
+      "mustNot": [
+        "Quotes a speedup or frame rate that was not measured",
+        "Rewrites the chart as a single imperative Picture or another architecture without evidence",
+        "Changes the chart's appearance without disclosing it",
+        "Applies a fixed element-count threshold as a rule"
+      ],
+      "references": [
+        "references/performance.md",
+        "references/drawing-and-paths.md",
+        "examples/performance-investigation.md"
+      ]
+    },
+    {
+      "id": "drag-marker-on-zoomed-map",
+      "scenario": "integrate-gesture",
+      "project": "Bare React Native 0.88 app with Gesture Handler 3.5.0 and Reanimated 4.7.1. A floor plan is drawn in a Group with a camera transform (pan and zoom shared values). An existing GestureHandlerRootView wraps the app.",
+      "prompt": "Let people drag the marker around the floor plan. Right now nothing is interactive.",
+      "expected": [
+        "Checks the installed Gesture Handler major and uses the API that major provides",
+        "Stores the marker's position at gesture start and adds translation, so a second drag does not jump",
+        "Converts screen deltas to world units through the inverse of the existing camera transform",
+        "Cleans up in a finalize callback so cancellation is handled",
+        "Recommends testing consecutive drags, cancellation and behaviour at different zoom levels on a device"
+      ],
+      "mustNot": [
+        "Assigns translation directly to the absolute position",
+        "Adds a second GestureHandlerRootView or migrates unrelated gesture code",
+        "Ignores the zoom factor when applying translation",
+        "Updates React state on every move event to redraw"
+      ],
+      "references": [
+        "references/gestures-and-interactions.md",
+        "examples/DragMarker.tsx",
+        "examples/geometry.ts"
+      ]
+    },
+    {
+      "id": "vignette-shader",
+      "scenario": "implement-shader",
+      "project": "Bare React Native app, scoped Skia 2.14.0. A full-width header Canvas draws an image.",
+      "prompt": "Add a soft vignette over the header using a shader, and animate its strength when the header collapses.",
+      "expected": [
+        "Writes SkSL with a supported entry point and declares uniforms whose names and types match what is passed",
+        "Compiles the effect once, handles a null result with a visible fallback, and animates a uniform rather than the source",
+        "Normalises coordinates with the drawn bounds and guards a zero size",
+        "Mentions that a typecheck cannot validate SkSL and that the result needs a device or CanvasKit render"
+      ],
+      "mustNot": [
+        "Pastes GLSL or WebGL constructs such as gl_FragColor or precision qualifiers",
+        "Recompiles the runtime effect on every frame or render",
+        "Assumes compilation always succeeds",
+        "Claims the vignette is cheaper than an alternative without measurement"
+      ],
+      "references": [
+        "references/shaders-and-effects.md",
+        "examples/RuntimeGlow.tsx"
+      ]
+    },
+    {
+      "id": "comet-trail",
+      "scenario": "game-effect",
+      "project": "Expo SDK 58 development build of a small arcade game. The simulation already advances in a frame callback on the UI runtime and exposes the player's position as a shared value. Rendering uses declarative Skia nodes.",
+      "prompt": "Add a fading trail behind the player.",
+      "expected": [
+        "Keeps the existing simulation owner and reads the position it already publishes",
+        "Bounds the trail history and explains what happens when capacity is reached",
+        "Builds the path with the builder API of the installed release inside a worklet",
+        "Handles pause, resume and reduced motion, and clears the trail when it is disabled",
+        "Flags per-frame array copying and path rebuilding as things to profile rather than as defects"
+      ],
+      "mustNot": [
+        "Introduces a second clock or moves the simulation to React state",
+        "Lets the trail grow without limit",
+        "Replaces the declarative renderer with a new architecture",
+        "Adds object pooling or an atlas without a measured need"
+      ],
+      "references": [
+        "references/game-development.md",
+        "references/animations-and-worklets.md",
+        "examples/BoundedTrail.tsx"
+      ]
+    },
+    {
+      "id": "expo-progress-ring",
+      "scenario": "expo-project",
+      "project": "Managed Expo SDK 58 app tested in Expo Go. package.json has expo ~58.0.0, @shopify/react-native-skia 2.14.0, react-native-reanimated ~4.7.1, react-native-gesture-handler ~3.3.0.",
+      "prompt": "Add an animated circular progress ring to the profile screen. Use the newest Skia if that helps.",
+      "expected": [
+        "Reads the Expo SDK version and the versions it resolves before suggesting anything",
+        "Keeps the scoped 2.x package and explains that v3 is not available in Expo Go and needs a development build",
+        "Uses a trimmed path or equivalent supported technique and passes shared values directly",
+        "Leaves Gesture Handler at the SDK's version and, if it is relevant, reports the recorded support-table discrepancy instead of upgrading",
+        "Uses npx expo install for any dependency that is genuinely required and says so first"
+      ],
+      "mustNot": [
+        "Runs npx expo install --fix or upgrades packages unprompted",
+        "Switches the import to react-native-skia 3.x",
+        "Tells the user to eject or leave Expo",
+        "Assumes a bare React Native native setup"
+      ],
+      "references": [
+        "references/compatibility.md",
+        "references/drawing-and-paths.md",
+        "examples/PathReveal.tsx"
+      ]
+    },
+    {
+      "id": "bare-signature-pad",
+      "scenario": "bare-react-native-project",
+      "project": "Bare React Native 0.76 app on the old architecture with @shopify/react-native-skia 1.x and Reanimated 3. No Expo modules. iOS and Android folders are committed.",
+      "prompt": "Add a signature pad where the customer signs with a finger, and export it as a PNG.",
+      "expected": [
+        "Detects that the installed releases predate the skill's pinned baseline and reads the installed type declarations instead of applying current documentation",
+        "Uses the path and gesture APIs that the installed versions export",
+        "Does not require Reanimated 4, Worklets or the New Architecture for this task",
+        "Describes the native steps a bare project needs for any change, such as pod install and a rebuild, without running them unasked",
+        "States which parts could not be validated against the older versions"
+      ],
+      "mustNot": [
+        "Uses Skia.PathBuilder or other symbols without checking that the installed release exports them",
+        "Installs Expo or suggests npx expo install",
+        "Upgrades React Native, Skia or Reanimated to satisfy an example",
+        "Presents the skill's pinned versions as requirements"
+      ],
+      "references": [
+        "references/compatibility.md",
+        "references/gestures-and-interactions.md",
+        "references/images-and-text.md"
+      ]
+    }
+  ],
+  "negativeTriggers": [
+    {
+      "id": "flatlist-performance",
+      "prompt": "Our FlatList with 5,000 rows drops frames while scrolling. How should we virtualise it?",
+      "reason": "List performance in React Native views; no canvas or Skia code is involved."
+    },
+    {
+      "id": "navigation-deep-link",
+      "prompt": "Set up deep links for the settings screen with React Navigation.",
+      "reason": "Navigation task."
+    },
+    {
+      "id": "reanimated-view-animation",
+      "prompt": "Animate this bottom sheet View with Reanimated and a pan gesture.",
+      "reason": "Reanimated and Gesture Handler on native views without Skia; the libraries overlap but the rendering does not."
+    },
+    {
+      "id": "backend-endpoint",
+      "prompt": "Add pagination to the /orders endpoint in our Express API.",
+      "reason": "Backend task in a repository that happens to contain a mobile app."
+    },
+    {
+      "id": "svg-icon-component",
+      "prompt": "Convert these icons to react-native-svg components.",
+      "reason": "A different drawing library; Skia guidance would be misleading."
+    },
+    {
+      "id": "web-canvas-2d",
+      "prompt": "Draw this chart on an HTML canvas with the 2D context in our Next.js site.",
+      "reason": "Browser canvas API, not React Native Skia."
+    }
+  ],
+  "results": {
+    "comparison": "2026-11-12",
+    "kind": "pilot",
+    "summary": "One run per task per arm. Too few runs to estimate variance; treat the counts as a first observation, not as a measured effect size.",
+    "setup": {
+      "agent": "Claude Code 2.1.251, headless (-p)",
+      "model": "claude-opus-5[1m]",
+      "tools": "Read, Glob, Grep, Edit, Write, Skill; no shell",
+      "settings": "project settings only; no MCP servers or plugins",
+      "skillInstall": "copied to .claude/skills/react-native-skia in the with-skill arm only",
+      "fixtures": "synthetic projects without node_modules, one per task",
+      "budgetPerRunUsd": 3,
+      "scoring": "One grader model run (Claude Opus) per task, given the final message, the diff and the list of inspected project files for both arms in random order with arm-revealing phrases removed. No human second reviewer."
+    },
+    "rounds": [
+      {
+        "round": 1,
+        "skill": "as first written",
+        "totals": {
+          "with-skill": {
+            "expectedMet": 25,
+            "expectedTotal": 39,
+            "mustNotViolated": 0,
+            "mustNotTotal": 32,
+            "costUsd": 6.58
+          },
+          "without-skill": {
+            "expectedMet": 13,
+            "expectedTotal": 39,
+            "mustNotViolated": 1,
+            "mustNotTotal": 32,
+            "costUsd": 3.51
+          }
+        },
+        "runs": [
+          {
+            "task": "pulse-on-new-message",
+            "arm": "with-skill",
+            "skillLoaded": true,
+            "skillFilesRead": 4,
+            "expectedMet": [
+              false,
+              true,
+              true,
+              true,
+              true
+            ],
+            "mustNotViolated": [
+              false,
+              false,
+              false,
+              false
+            ],
+            "turns": 18,
+            "costUsd": 0.6
+          },
+          {
+            "task": "pulse-on-new-message",
+            "arm": "without-skill",
+            "skillLoaded": false,
+            "skillFilesRead": 0,
+            "expectedMet": [
+              false,
+              false,
+              false,
+              false,
+              true
+            ],
+            "mustNotViolated": [
+              false,
+              false,
+              false,
+              false
+            ],
+            "turns": 8,
+            "costUsd": 0.29
+          },
+          {
+            "task": "blank-canvas-after-upgrade",
+            "arm": "with-skill",
+            "skillLoaded": true,
+            "skillFilesRead": 5,
+            "expectedMet": [
+              true,
+              false,
+              false,
+              false,
+              false
+            ],
+            "mustNotViolated": [
+              false,
+              false,
+              false,
+              false
+            ],
+            "turns": 27,
+            "costUsd": 0.63
+          },
+          {
+            "task": "blank-canvas-after-upgrade",
+            "arm": "without-skill",
+            "skillLoaded": false,
+            "skillFilesRead": 0,
+            "expectedMet": [
+              true,
+              false,
+              false,
+              false,
+              false
+            ],
+            "mustNotViolated": [
+              false,
+              false,
+              false,
+              false
+            ],
+            "turns": 15,
+            "costUsd": 0.38
+          },
+          {
+            "task": "stuttering-chart",
+            "arm": "with-skill",
+            "skillLoaded": true,
+            "skillFilesRead": 4,
+            "expectedMet": [
+              true,
+              false,
+              true,
+              false,
+              true
+            ],
+            "mustNotViolated": [
+              false,
+              false,
+              false,
+              false
+            ],
+            "turns": 17,
+            "costUsd": 0.55
+          },
+          {
+            "task": "stuttering-chart",
+            "arm": "without-skill",
+            "skillLoaded": false,
+            "skillFilesRead": 0,
+            "expectedMet": [
+              true,
+              false,
+              false,
+              false,
+              true
+            ],
+            "mustNotViolated": [
+              false,
+              false,
+              false,
+              false
+            ],
+            "turns": 15,
+            "costUsd": 0.52
+          },
+          {
+            "task": "drag-marker-on-zoomed-map",
+            "arm": "with-skill",
+            "skillLoaded": true,
+            "skillFilesRead": 4,
+            "expectedMet": [
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "mustNotViolated": [
+              false,
+              false,
+              false,
+              false
+            ],
+            "turns": 16,
+            "costUsd": 0.63
+          },
+          {
+            "task": "drag-marker-on-zoomed-map",
+            "arm": "without-skill",
+            "skillLoaded": false,
+            "skillFilesRead": 0,
+            "expectedMet": [
+              false,
+              false,
+              true,
+              true,
+              false
+            ],
+            "mustNotViolated": [
+              false,
+              false,
+              false,
+              false
+            ],
+            "turns": 11,
+            "costUsd": 0.34
+          },
+          {
+            "task": "vignette-shader",
+            "arm": "with-skill",
+            "skillLoaded": true,
+            "skillFilesRead": 6,
+            "expectedMet": [
+              true,
+              true,
+              true,
+              true
+            ],
+            "mustNotViolated": [
+              false,
+              false,
+              false,
+              false
+            ],
+            "turns": 17,
+            "costUsd": 0.52
+          },
+          {
+            "task": "vignette-shader",
+            "arm": "without-skill",
+            "skillLoaded": false,
+            "skillFilesRead": 0,
+            "expectedMet": [
+              true,
+              false,
+              false,
+              false
+            ],
+            "mustNotViolated": [
+              false,
+              false,
+              true,
+              false
+            ],
+            "turns": 10,
+            "costUsd": 0.29
+          },
+          {
+            "task": "comet-trail",
+            "arm": "with-skill",
+            "skillLoaded": true,
+            "skillFilesRead": 7,
+            "expectedMet": [
+              true,
+              false,
+              false,
+              false,
+              false
+            ],
+            "mustNotViolated": [
+              false,
+              false,
+              false,
+              false
+            ],
+            "turns": 25,
+            "costUsd": 1.24
+          },
+          {
+            "task": "comet-trail",
+            "arm": "without-skill",
+            "skillLoaded": false,
+            "skillFilesRead": 0,
+            "expectedMet": [
+              true,
+              false,
+              false,
+              false,
+              false
+            ],
+            "mustNotViolated": [
+              false,
+              false,
+              false,
+              false
+            ],
+            "turns": 10,
+            "costUsd": 0.49
+          },
+          {
+            "task": "expo-progress-ring",
+            "arm": "with-skill",
+            "skillLoaded": true,
+            "skillFilesRead": 7,
+            "expectedMet": [
+              true,
+              false,
+              true,
+              true,
+              true
+            ],
+            "mustNotViolated": [
+              false,
+              false,
+              false,
+              false
+            ],
+            "turns": 23,
+            "costUsd": 0.68
+          },
+          {
+            "task": "expo-progress-ring",
+            "arm": "without-skill",
+            "skillLoaded": false,
+            "skillFilesRead": 0,
+            "expectedMet": [
+              true,
+              false,
+              false,
+              true,
+              false
+            ],
+            "mustNotViolated": [
+              false,
+              false,
+              false,
+              false
+            ],
+            "turns": 14,
+            "costUsd": 0.39
+          },
+          {
+            "task": "bare-signature-pad",
+            "arm": "with-skill",
+            "skillLoaded": true,
+            "skillFilesRead": 8,
+            "expectedMet": [
+              false,
+              true,
+              true,
+              false,
+              true
+            ],
+            "mustNotViolated": [
+              false,
+              false,
+              false,
+              false
+            ],
+            "turns": 30,
+            "costUsd": 1.73
+          },
+          {
+            "task": "bare-signature-pad",
+            "arm": "without-skill",
+            "skillLoaded": false,
+            "skillFilesRead": 0,
+            "expectedMet": [
+              false,
+              true,
+              true,
+              false,
+              true
+            ],
+            "mustNotViolated": [
+              false,
+              false,
+              false,
+              false
+            ],
+            "turns": 19,
+            "costUsd": 0.81
+          }
+        ]
+      },
+      {
+        "round": 2,
+        "skill": "after revising guidance in response to round 1; with-skill arm rerun, without-skill submissions reused and regraded",
+        "totals": {
+          "with-skill": {
+            "expectedMet": 36,
+            "expectedTotal": 39,
+            "mustNotViolated": 0,
+            "mustNotTotal": 32,
+            "costUsd": 5.35
+          },
+          "without-skill": {
+            "expectedMet": 12,
+            "expectedTotal": 39,
+            "mustNotViolated": 1,
+            "mustNotTotal": 32,
+            "costUsd": 3.51
+          }
+        },
+        "runs": [
+          {
+            "task": "pulse-on-new-message",
+            "arm": "with-skill",
+            "skillLoaded": true,
+            "expectedMet": [
+              false,
+              true,
+              true,
+              true,
+              true
+            ],
+            "mustNotViolated": [
+              false,
+              false,
+              false,
+              false
+            ],
+            "turns": 17,
+            "costUsd": 0.49
+          },
+          {
+            "task": "pulse-on-new-message",
+            "arm": "without-skill",
+            "skillLoaded": false,
+            "expectedMet": [
+              false,
+              false,
+              false,
+              false,
+              true
+            ],
+            "mustNotViolated": [
+              false,
+              false,
+              false,
+              false
+            ],
+            "turns": 8,
+            "costUsd": 0.29
+          },
+          {
+            "task": "blank-canvas-after-upgrade",
+            "arm": "without-skill",
+            "skillLoaded": false,
+            "expectedMet": [
+              true,
+              false,
+              false,
+              false,
+              false
+            ],
+            "mustNotViolated": [
+              false,
+              false,
+              false,
+              false
+            ],
+            "turns": 15,
+            "costUsd": 0.38
+          },
+          {
+            "task": "blank-canvas-after-upgrade",
+            "arm": "with-skill",
+            "skillLoaded": true,
+            "expectedMet": [
+              true,
+              true,
+              true,
+              true,
+              false
+            ],
+            "mustNotViolated": [
+              false,
+              false,
+              false,
+              false
+            ],
+            "turns": 22,
+            "costUsd": 0.59
+          },
+          {
+            "task": "stuttering-chart",
+            "arm": "with-skill",
+            "skillLoaded": true,
+            "expectedMet": [
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "mustNotViolated": [
+              false,
+              false,
+              false,
+              false
+            ],
+            "turns": 18,
+            "costUsd": 0.48
+          },
+          {
+            "task": "stuttering-chart",
+            "arm": "without-skill",
+            "skillLoaded": false,
+            "expectedMet": [
+              true,
+              false,
+              false,
+              false,
+              true
+            ],
+            "mustNotViolated": [
+              false,
+              false,
+              false,
+              false
+            ],
+            "turns": 15,
+            "costUsd": 0.52
+          },
+          {
+            "task": "drag-marker-on-zoomed-map",
+            "arm": "without-skill",
+            "skillLoaded": false,
+            "expectedMet": [
+              false,
+              false,
+              true,
+              true,
+              false
+            ],
+            "mustNotViolated": [
+              false,
+              false,
+              false,
+              false
+            ],
+            "turns": 11,
+            "costUsd": 0.34
+          },
+          {
+            "task": "drag-marker-on-zoomed-map",
+            "arm": "with-skill",
+            "skillLoaded": true,
+            "expectedMet": [
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "mustNotViolated": [
+              false,
+              false,
+              false,
+              false
+            ],
+            "turns": 19,
+            "costUsd": 0.62
+          },
+          {
+            "task": "vignette-shader",
+            "arm": "without-skill",
+            "skillLoaded": false,
+            "expectedMet": [
+              true,
+              false,
+              false,
+              false
+            ],
+            "mustNotViolated": [
+              false,
+              false,
+              true,
+              false
+            ],
+            "turns": 10,
+            "costUsd": 0.29
+          },
+          {
+            "task": "vignette-shader",
+            "arm": "with-skill",
+            "skillLoaded": true,
+            "expectedMet": [
+              true,
+              true,
+              true,
+              true
+            ],
+            "mustNotViolated": [
+              false,
+              false,
+              false,
+              false
+            ],
+            "turns": 19,
+            "costUsd": 0.66
+          },
+          {
+            "task": "comet-trail",
+            "arm": "without-skill",
+            "skillLoaded": false,
+            "expectedMet": [
+              true,
+              false,
+              false,
+              false,
+              false
+            ],
+            "mustNotViolated": [
+              false,
+              false,
+              false,
+              false
+            ],
+            "turns": 10,
+            "costUsd": 0.49
+          },
+          {
+            "task": "comet-trail",
+            "arm": "with-skill",
+            "skillLoaded": true,
+            "expectedMet": [
+              true,
+              true,
+              true,
+              false,
+              true
+            ],
+            "mustNotViolated": [
+              false,
+              false,
+              false,
+              false
+            ],
+            "turns": 22,
+            "costUsd": 0.84
+          },
+          {
+            "task": "expo-progress-ring",
+            "arm": "with-skill",
+            "skillLoaded": true,
+            "expectedMet": [
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "mustNotViolated": [
+              false,
+              false,
+              false,
+              false
+            ],
+            "turns": 23,
+            "costUsd": 0.66
+          },
+          {
+            "task": "expo-progress-ring",
+            "arm": "without-skill",
+            "skillLoaded": false,
+            "expectedMet": [
+              false,
+              false,
+              false,
+              true,
+              false
+            ],
+            "mustNotViolated": [
+              false,
+              false,
+              false,
+              false
+            ],
+            "turns": 14,
+            "costUsd": 0.39
+          },
+          {
+            "task": "bare-signature-pad",
+            "arm": "without-skill",
+            "skillLoaded": false,
+            "expectedMet": [
+              false,
+              true,
+              true,
+              false,
+              true
+            ],
+            "mustNotViolated": [
+              false,
+              false,
+              false,
+              false
+            ],
+            "turns": 19,
+            "costUsd": 0.81
+          },
+          {
+            "task": "bare-signature-pad",
+            "arm": "with-skill",
+            "skillLoaded": true,
+            "expectedMet": [
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "mustNotViolated": [
+              false,
+              false,
+              false,
+              false
+            ],
+            "turns": 19,
+            "costUsd": 1.01
+          }
+        ]
+      }
+    ],
+    "runs": [
+      {
+        "task": "pulse-on-new-message",
+        "arm": "with-skill",
+        "skillLoaded": true,
+        "expectedMet": [
+          false,
+          true,
+          true,
+          true,
+          true
+        ],
+        "mustNotViolated": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "turns": 17,
+        "costUsd": 0.49
+      },
+      {
+        "task": "pulse-on-new-message",
+        "arm": "without-skill",
+        "skillLoaded": false,
+        "expectedMet": [
+          false,
+          false,
+          false,
+          false,
+          true
+        ],
+        "mustNotViolated": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "turns": 8,
+        "costUsd": 0.29
+      },
+      {
+        "task": "blank-canvas-after-upgrade",
+        "arm": "without-skill",
+        "skillLoaded": false,
+        "expectedMet": [
+          true,
+          false,
+          false,
+          false,
+          false
+        ],
+        "mustNotViolated": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "turns": 15,
+        "costUsd": 0.38
+      },
+      {
+        "task": "blank-canvas-after-upgrade",
+        "arm": "with-skill",
+        "skillLoaded": true,
+        "expectedMet": [
+          true,
+          true,
+          true,
+          true,
+          false
+        ],
+        "mustNotViolated": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "turns": 22,
+        "costUsd": 0.59
+      },
+      {
+        "task": "stuttering-chart",
+        "arm": "with-skill",
+        "skillLoaded": true,
+        "expectedMet": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "mustNotViolated": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "turns": 18,
+        "costUsd": 0.48
+      },
+      {
+        "task": "stuttering-chart",
+        "arm": "without-skill",
+        "skillLoaded": false,
+        "expectedMet": [
+          true,
+          false,
+          false,
+          false,
+          true
+        ],
+        "mustNotViolated": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "turns": 15,
+        "costUsd": 0.52
+      },
+      {
+        "task": "drag-marker-on-zoomed-map",
+        "arm": "without-skill",
+        "skillLoaded": false,
+        "expectedMet": [
+          false,
+          false,
+          true,
+          true,
+          false
+        ],
+        "mustNotViolated": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "turns": 11,
+        "costUsd": 0.34
+      },
+      {
+        "task": "drag-marker-on-zoomed-map",
+        "arm": "with-skill",
+        "skillLoaded": true,
+        "expectedMet": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "mustNotViolated": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "turns": 19,
+        "costUsd": 0.62
+      },
+      {
+        "task": "vignette-shader",
+        "arm": "without-skill",
+        "skillLoaded": false,
+        "expectedMet": [
+          true,
+          false,
+          false,
+          false
+        ],
+        "mustNotViolated": [
+          false,
+          false,
+          true,
+          false
+        ],
+        "turns": 10,
+        "costUsd": 0.29
+      },
+      {
+        "task": "vignette-shader",
+        "arm": "with-skill",
+        "skillLoaded": true,
+        "expectedMet": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "mustNotViolated": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "turns": 19,
+        "costUsd": 0.66
+      },
+      {
+        "task": "comet-trail",
+        "arm": "without-skill",
+        "skillLoaded": false,
+        "expectedMet": [
+          true,
+          false,
+          false,
+          false,
+          false
+        ],
+        "mustNotViolated": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "turns": 10,
+        "costUsd": 0.49
+      },
+      {
+        "task": "comet-trail",
+        "arm": "with-skill",
+        "skillLoaded": true,
+        "expectedMet": [
+          true,
+          true,
+          true,
+          false,
+          true
+        ],
+        "mustNotViolated": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "turns": 22,
+        "costUsd": 0.84
+      },
+      {
+        "task": "expo-progress-ring",
+        "arm": "with-skill",
+        "skillLoaded": true,
+        "expectedMet": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "mustNotViolated": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "turns": 23,
+        "costUsd": 0.66
+      },
+      {
+        "task": "expo-progress-ring",
+        "arm": "without-skill",
+        "skillLoaded": false,
+        "expectedMet": [
+          false,
+          false,
+          false,
+          true,
+          false
+        ],
+        "mustNotViolated": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "turns": 14,
+        "costUsd": 0.39
+      },
+      {
+        "task": "bare-signature-pad",
+        "arm": "without-skill",
+        "skillLoaded": false,
+        "expectedMet": [
+          false,
+          true,
+          true,
+          false,
+          true
+        ],
+        "mustNotViolated": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "turns": 19,
+        "costUsd": 0.81
+      },
+      {
+        "task": "bare-signature-pad",
+        "arm": "with-skill",
+        "skillLoaded": true,
+        "expectedMet": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "mustNotViolated": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "turns": 19,
+        "costUsd": 1.01
+      }
+    ],
+    "negativeTriggers": [
+      {
+        "id": "flatlist-performance",
+        "skillLoaded": false,
+        "otherSkillsLoaded": [],
+        "ended": "success"
+      },
+      {
+        "id": "navigation-deep-link",
+        "skillLoaded": false,
+        "otherSkillsLoaded": [],
+        "ended": "success"
+      },
+      {
+        "id": "reanimated-view-animation",
+        "skillLoaded": false,
+        "otherSkillsLoaded": [],
+        "ended": "success"
+      },
+      {
+        "id": "backend-endpoint",
+        "skillLoaded": false,
+        "otherSkillsLoaded": [],
+        "ended": "success"
+      },
+      {
+        "id": "svg-icon-component",
+        "skillLoaded": false,
+        "otherSkillsLoaded": [],
+        "ended": "success"
+      },
+      {
+        "id": "web-canvas-2d",
+        "skillLoaded": false,
+        "otherSkillsLoaded": [
+          "dataviz"
+        ],
+        "ended": "error_max_budget_usd"
+      }
+    ],
+    "caveat": "Round 2 guidance was revised after seeing round 1 against the same tasks, so its scores are not an independent test."
+  }
+}

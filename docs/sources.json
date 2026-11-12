@@ -1,0 +1,720 @@
+{
+  "researchedOn": "2026-11-12",
+  "note": "Dated record of what the skill's version-sensitive statements rest on. npm run check:sources re-tests the entries that carry a check.",
+  "pins": {
+    "baseline": {
+      "@shopify/react-native-skia": "2.14.0",
+      "@types/react": "19.3.0",
+      "react": "19.3.0",
+      "react-native": "0.88.1",
+      "react-native-gesture-handler": "3.5.0",
+      "react-native-reanimated": "4.7.1",
+      "react-native-worklets": "0.13.0",
+      "typescript": "6.0.3",
+      "yaml": "2.8.2"
+    },
+    "v3": {
+      "react-native-skia": "3.10.0"
+    },
+    "skillsCli": "1.8.1",
+    "canvaskit": "0.41.0"
+  },
+  "commits": {
+    "wcandillon/react-native-skia": {
+      "sha": "38ae7040ff06e02438eed05e5f4ca9f8ab468e3c",
+      "date": "2026-11-11"
+    },
+    "expo/expo (sdk-58)": {
+      "sha": "82133fc44609eb726eba9e02c41ed35a60043f2b",
+      "date": "2026-11-11"
+    },
+    "zakariaf/ReactNative-Skills": {
+      "sha": "41a0e66d4d09de5b46e6537f59a97c7192473486",
+      "date": "2026-10-17"
+    }
+  },
+  "sources": [
+    {
+      "id": "skia-repo",
+      "url": "https://github.com/wcandillon/react-native-skia",
+      "kind": "repository",
+      "accessed": "2026-11-12",
+      "supports": "Upstream source and documentation, read at commit 38ae7040ff06e02438eed05e5f4ca9f8ab468e3c (2026-11-11)."
+    },
+    {
+      "id": "skia-repo-former",
+      "url": "https://github.com/Shopify/react-native-skia",
+      "kind": "repository",
+      "accessed": "2026-11-12",
+      "supports": "Former repository location; redirects to the wcandillon repository."
+    },
+    {
+      "id": "npm-skia-scoped",
+      "url": "https://registry.npmjs.org/@shopify%2freact-native-skia",
+      "kind": "registry",
+      "accessed": "2026-11-12",
+      "supports": "Scoped package versions, dist-tags and peer ranges."
+    },
+    {
+      "id": "npm-skia-unscoped",
+      "url": "https://registry.npmjs.org/react-native-skia",
+      "kind": "registry",
+      "accessed": "2026-11-12",
+      "supports": "Unscoped package versions (2.15.x and 3.x), dist-tags and peer ranges."
+    },
+    {
+      "id": "skia-v2-install",
+      "url": "https://wcandillon.github.io/react-native-skia/v2/docs/getting-started/installation/",
+      "kind": "official-docs",
+      "accessed": "2026-11-12",
+      "supports": "v2 React Native and React requirements."
+    },
+    {
+      "id": "skia-v2-animations",
+      "url": "https://wcandillon.github.io/react-native-skia/v2/docs/animations/animations/",
+      "kind": "official-docs",
+      "accessed": "2026-11-12",
+      "supports": "Direct shared-value props; Reanimated 4 required from Skia 2.10."
+    },
+    {
+      "id": "skia-v2-gestures",
+      "url": "https://wcandillon.github.io/react-native-skia/v2/docs/animations/gestures/",
+      "kind": "official-docs",
+      "accessed": "2026-11-12",
+      "supports": "Gesture Handler integration with a canvas."
+    },
+    {
+      "id": "skia-v2-hooks",
+      "url": "https://wcandillon.github.io/react-native-skia/v2/docs/animations/hooks/",
+      "kind": "official-docs",
+      "accessed": "2026-11-12",
+      "supports": "usePathInterpolation, usePathValue, useClock, buffer hooks."
+    },
+    {
+      "id": "skia-v2-textures",
+      "url": "https://wcandillon.github.io/react-native-skia/v2/docs/animations/textures/",
+      "kind": "official-docs",
+      "accessed": "2026-11-12",
+      "supports": "Texture hooks and UI-thread texture constraints."
+    },
+    {
+      "id": "skia-v2-canvas",
+      "url": "https://wcandillon.github.io/react-native-skia/v2/docs/canvas/overview/",
+      "kind": "official-docs",
+      "accessed": "2026-11-12",
+      "supports": "Canvas props, sizing and snapshots on v2."
+    },
+    {
+      "id": "skia-v2-group",
+      "url": "https://wcandillon.github.io/react-native-skia/v2/docs/group/",
+      "kind": "official-docs",
+      "accessed": "2026-11-12",
+      "supports": "Transform origin, radians, clipping, layers and the components unaffected by group paint."
+    },
+    {
+      "id": "skia-v2-paint",
+      "url": "https://wcandillon.github.io/react-native-skia/v2/docs/paint/overview/",
+      "kind": "official-docs",
+      "accessed": "2026-11-12",
+      "supports": "Paint inheritance and properties."
+    },
+    {
+      "id": "skia-v2-path",
+      "url": "https://wcandillon.github.io/react-native-skia/v2/docs/shapes/path/",
+      "kind": "official-docs",
+      "accessed": "2026-11-12",
+      "supports": "Path component, trimming, fill types."
+    },
+    {
+      "id": "skia-v2-path-effects",
+      "url": "https://wcandillon.github.io/react-native-skia/v2/docs/path-effects/",
+      "kind": "official-docs",
+      "accessed": "2026-11-12",
+      "supports": "Dash, corner and other path effects."
+    },
+    {
+      "id": "skia-v2-pictures",
+      "url": "https://wcandillon.github.io/react-native-skia/v2/docs/shapes/pictures/",
+      "kind": "official-docs",
+      "accessed": "2026-11-12",
+      "supports": "Picture recording and the Picture component."
+    },
+    {
+      "id": "skia-v2-atlas",
+      "url": "https://wcandillon.github.io/react-native-skia/v2/docs/shapes/atlas/",
+      "kind": "official-docs",
+      "accessed": "2026-11-12",
+      "supports": "Atlas component, RSXform, buffer hooks."
+    },
+    {
+      "id": "skia-v2-images",
+      "url": "https://wcandillon.github.io/react-native-skia/v2/docs/images/",
+      "kind": "official-docs",
+      "accessed": "2026-11-12",
+      "supports": "Image loading, fit modes and v2 image factories."
+    },
+    {
+      "id": "skia-v2-text",
+      "url": "https://wcandillon.github.io/react-native-skia/v2/docs/text/text/",
+      "kind": "official-docs",
+      "accessed": "2026-11-12",
+      "supports": "Text component, fonts and baseline positioning."
+    },
+    {
+      "id": "skia-v2-paragraph",
+      "url": "https://wcandillon.github.io/react-native-skia/v2/docs/text/paragraph/",
+      "kind": "official-docs",
+      "accessed": "2026-11-12",
+      "supports": "Paragraph API and font management."
+    },
+    {
+      "id": "skia-v2-shaders",
+      "url": "https://wcandillon.github.io/react-native-skia/v2/docs/shaders/overview/",
+      "kind": "official-docs",
+      "accessed": "2026-11-12",
+      "supports": "SkSL runtime effects, uniforms and child shaders."
+    },
+    {
+      "id": "skia-v2-gradients",
+      "url": "https://wcandillon.github.io/react-native-skia/v2/docs/shaders/gradients/",
+      "kind": "official-docs",
+      "accessed": "2026-11-12",
+      "supports": "Gradient shaders."
+    },
+    {
+      "id": "skia-v2-runtime-filter",
+      "url": "https://wcandillon.github.io/react-native-skia/v2/docs/image-filters/runtime-shader/",
+      "kind": "official-docs",
+      "accessed": "2026-11-12",
+      "supports": "Runtime shader image filters and pixel density."
+    },
+    {
+      "id": "skia-v2-blur",
+      "url": "https://wcandillon.github.io/react-native-skia/v2/docs/image-filters/blur/",
+      "kind": "official-docs",
+      "accessed": "2026-11-12",
+      "supports": "Image blur filter."
+    },
+    {
+      "id": "skia-v2-mask-filters",
+      "url": "https://wcandillon.github.io/react-native-skia/v2/docs/mask-filters/",
+      "kind": "official-docs",
+      "accessed": "2026-11-12",
+      "supports": "Mask blur filter."
+    },
+    {
+      "id": "skia-v2-headless",
+      "url": "https://wcandillon.github.io/react-native-skia/v2/docs/getting-started/headless/",
+      "kind": "official-docs",
+      "accessed": "2026-11-12",
+      "supports": "Node rendering through CanvasKit, used by the graphics tests."
+    },
+    {
+      "id": "skia-v3-install",
+      "url": "https://wcandillon.github.io/react-native-skia/docs/getting-started/installation/",
+      "kind": "official-docs",
+      "accessed": "2026-11-12",
+      "supports": "v3 installation, Vulkan and platform requirements."
+    },
+    {
+      "id": "skia-v3-migration",
+      "url": "https://wcandillon.github.io/react-native-skia/docs/getting-started/migration/",
+      "kind": "official-docs",
+      "accessed": "2026-11-12",
+      "supports": "Package rename, platform requirements, Canvas prop and image API changes."
+    },
+    {
+      "id": "skia-v3-web",
+      "url": "https://wcandillon.github.io/react-native-skia/docs/getting-started/web/",
+      "kind": "official-docs",
+      "accessed": "2026-11-12",
+      "supports": "CanvasKit loading on web."
+    },
+    {
+      "id": "skia-v3-images",
+      "url": "https://wcandillon.github.io/react-native-skia/docs/images/",
+      "kind": "official-docs",
+      "accessed": "2026-11-12",
+      "supports": "GPU and CPU images, asynchronous readback on v3."
+    },
+    {
+      "id": "skia-v3-atlas",
+      "url": "https://wcandillon.github.io/react-native-skia/docs/shapes/atlas/",
+      "kind": "official-docs",
+      "accessed": "2026-11-12",
+      "supports": "Atlas on v3."
+    },
+    {
+      "id": "rea-compat",
+      "url": "https://docs.swmansion.com/react-native-reanimated/docs/guides/compatibility/",
+      "kind": "official-docs",
+      "accessed": "2026-11-12",
+      "supports": "Reanimated, React Native and Worklets support matrix."
+    },
+    {
+      "id": "rea-worklets",
+      "url": "https://docs.swmansion.com/react-native-reanimated/docs/guides/worklets/",
+      "kind": "official-docs",
+      "accessed": "2026-11-12",
+      "supports": "Worklet runtimes, directives and scheduling."
+    },
+    {
+      "id": "rea-frame-callback",
+      "url": "https://docs.swmansion.com/react-native-reanimated/docs/advanced/useFrameCallback/",
+      "kind": "official-docs",
+      "accessed": "2026-11-12",
+      "supports": "Frame callback timing fields, including a nullable first delta."
+    },
+    {
+      "id": "rea-reduced-motion",
+      "url": "https://docs.swmansion.com/react-native-reanimated/docs/device/useReducedMotion/",
+      "kind": "official-docs",
+      "accessed": "2026-11-12",
+      "supports": "Reduced-motion value is read at application start."
+    },
+    {
+      "id": "rea-performance",
+      "url": "https://docs.swmansion.com/react-native-reanimated/docs/guides/performance/",
+      "kind": "official-docs",
+      "accessed": "2026-11-12",
+      "supports": "Reanimated performance guidance."
+    },
+    {
+      "id": "rea-troubleshooting",
+      "url": "https://docs.swmansion.com/react-native-reanimated/docs/guides/troubleshooting/",
+      "kind": "official-docs",
+      "accessed": "2026-11-12",
+      "supports": "Plugin and version mismatch diagnostics."
+    },
+    {
+      "id": "rngh-setup",
+      "url": "https://docs.swmansion.com/react-native-gesture-handler/docs/fundamentals/getting-started/",
+      "kind": "official-docs",
+      "accessed": "2026-11-12",
+      "supports": "Installation, root view and the React Native support matrix."
+    },
+    {
+      "id": "rngh-pan",
+      "url": "https://docs.swmansion.com/react-native-gesture-handler/docs/gestures/use-pan-gesture/",
+      "kind": "official-docs",
+      "accessed": "2026-11-12",
+      "supports": "usePanGesture configuration and callbacks."
+    },
+    {
+      "id": "rn-performance",
+      "url": "https://reactnative.dev/docs/performance",
+      "kind": "official-docs",
+      "accessed": "2026-11-12",
+      "supports": "React Native frame budget and profiling overview."
+    },
+    {
+      "id": "expo-skia",
+      "url": "https://docs.expo.dev/versions/v58.0.0/sdk/skia/",
+      "kind": "official-docs",
+      "accessed": "2026-11-12",
+      "supports": "Expo SDK 58 recommended Skia version."
+    },
+    {
+      "id": "expo-bundle",
+      "url": "https://raw.githubusercontent.com/expo/expo/sdk-58/packages/expo/bundledNativeModules.json",
+      "kind": "repository",
+      "accessed": "2026-11-12",
+      "supports": "Expo SDK 58 bundled module versions, read at commit 82133fc44609eb726eba9e02c41ed35a60043f2b (2026-11-11)."
+    },
+    {
+      "id": "expo-dev-builds",
+      "url": "https://docs.expo.dev/develop/development-builds/introduction/",
+      "kind": "official-docs",
+      "accessed": "2026-11-12",
+      "supports": "Development builds versus Expo Go."
+    },
+    {
+      "id": "expo-cli",
+      "url": "https://docs.expo.dev/more/expo-cli/",
+      "kind": "official-docs",
+      "accessed": "2026-11-12",
+      "supports": "expo install --check and --fix behaviour."
+    },
+    {
+      "id": "agent-skills-spec",
+      "url": "https://agentskills.io/specification",
+      "kind": "specification",
+      "accessed": "2026-11-12",
+      "supports": "Frontmatter fields, limits and progressive disclosure guidance."
+    },
+    {
+      "id": "skills-cli",
+      "url": "https://github.com/vercel-labs/skills",
+      "kind": "repository",
+      "accessed": "2026-11-12",
+      "supports": "skills CLI source and usage."
+    },
+    {
+      "id": "skills-cli-agents",
+      "url": "https://github.com/vercel-labs/skills/blob/main/docs/agents.md",
+      "kind": "repository",
+      "accessed": "2026-11-12",
+      "supports": "Per-agent installation directories."
+    },
+    {
+      "id": "npm-skills-cli",
+      "url": "https://registry.npmjs.org/skills",
+      "kind": "registry",
+      "accessed": "2026-11-12",
+      "supports": "skills CLI versions; 1.8.1 published 2026-11-11."
+    },
+    {
+      "id": "community-zakariaf",
+      "url": "https://github.com/zakariaf/ReactNative-Skills/tree/41a0e66d4d09de5b46e6537f59a97c7192473486/skills/skia-canvas-rendering",
+      "kind": "community",
+      "accessed": "2026-11-12",
+      "supports": "Existing public Skia skill, read at commit 41a0e66d4d09de5b46e6537f59a97c7192473486 (2026-10-17) for scope comparison only."
+    },
+    {
+      "id": "community-imfa",
+      "url": "https://github.com/imfa-solutions/skills",
+      "kind": "community",
+      "accessed": "2026-11-12",
+      "supports": "Listed by a skill search index as containing an rn-skia skill; the repository returned 404 and was not read.",
+      "status": "unavailable"
+    }
+  ],
+  "claims": [
+    {
+      "id": "repository-moved",
+      "statement": "Shopify/react-native-skia redirects to wcandillon/react-native-skia.",
+      "basis": "documented",
+      "evidence": [
+        "skia-repo-former",
+        "skia-repo"
+      ],
+      "check": {
+        "type": "redirect",
+        "from": "https://github.com/Shopify/react-native-skia",
+        "to": "https://github.com/wcandillon/react-native-skia"
+      }
+    },
+    {
+      "id": "scoped-ends-at-2.14",
+      "statement": "@shopify/react-native-skia latest is 2.14.0 and the scoped name has no 3.x release.",
+      "basis": "package-metadata",
+      "evidence": [
+        "npm-skia-scoped",
+        "skia-v3-migration"
+      ],
+      "check": {
+        "type": "npm-dist-tag",
+        "package": "@shopify/react-native-skia",
+        "tag": "latest",
+        "equals": "2.14.0"
+      }
+    },
+    {
+      "id": "scoped-has-no-v3",
+      "statement": "No stable 3.x version is published under the scoped name.",
+      "basis": "package-metadata",
+      "evidence": [
+        "npm-skia-scoped"
+      ],
+      "check": {
+        "type": "npm-majors",
+        "package": "@shopify/react-native-skia",
+        "includes": [
+          2
+        ],
+        "excludes": [
+          3
+        ]
+      }
+    },
+    {
+      "id": "unscoped-spans-two-majors",
+      "statement": "react-native-skia publishes both 2.x (2.15.0 to 2.15.5, dist-tag release-2.x) and 3.x, so the name does not identify the major.",
+      "basis": "package-metadata",
+      "evidence": [
+        "npm-skia-unscoped"
+      ],
+      "check": {
+        "type": "npm-majors",
+        "package": "react-native-skia",
+        "includes": [
+          2,
+          3
+        ]
+      }
+    },
+    {
+      "id": "unscoped-latest",
+      "statement": "react-native-skia latest was 3.10.0 (published 2026-11-10) on the research date.",
+      "basis": "package-metadata",
+      "evidence": [
+        "npm-skia-unscoped"
+      ],
+      "check": {
+        "type": "npm-dist-tag",
+        "package": "react-native-skia",
+        "tag": "latest",
+        "equals": "3.10.0"
+      }
+    },
+    {
+      "id": "scoped-peer-react-native",
+      "statement": "@shopify/react-native-skia@2.14.0 declares peer react-native >=0.78.",
+      "basis": "package-metadata",
+      "evidence": [
+        "npm-skia-scoped"
+      ],
+      "check": {
+        "type": "npm-peer",
+        "package": "@shopify/react-native-skia",
+        "version": "2.14.0",
+        "peer": "react-native",
+        "equals": ">=0.78"
+      }
+    },
+    {
+      "id": "v3-peer-react-native",
+      "statement": "react-native-skia@3.10.0 declares peer react-native >=0.79.",
+      "basis": "package-metadata",
+      "evidence": [
+        "npm-skia-unscoped"
+      ],
+      "check": {
+        "type": "npm-peer",
+        "package": "react-native-skia",
+        "version": "3.10.0",
+        "peer": "react-native",
+        "equals": ">=0.79"
+      }
+    },
+    {
+      "id": "skia-peer-reanimated",
+      "statement": "@shopify/react-native-skia@2.14.0 declares optional peer react-native-reanimated >=4.0.0.",
+      "basis": "package-metadata",
+      "evidence": [
+        "npm-skia-scoped"
+      ],
+      "check": {
+        "type": "npm-peer",
+        "package": "@shopify/react-native-skia",
+        "version": "2.14.0",
+        "peer": "react-native-reanimated",
+        "equals": ">=4.0.0"
+      }
+    },
+    {
+      "id": "v2-docs-react-native",
+      "statement": "The v2 installation page requires react-native >=0.79 and react >=19.",
+      "basis": "documented",
+      "evidence": [
+        "skia-v2-install"
+      ],
+      "check": {
+        "type": "page-contains",
+        "source": "skia-v2-install",
+        "phrases": [
+          "react-native@>=0.79 and react@>=19 are required"
+        ]
+      }
+    },
+    {
+      "id": "reanimated-4-from-2.10",
+      "statement": "From Skia 2.10 the animation integration requires Reanimated 4; earlier versions can use Reanimated 3.",
+      "basis": "documented",
+      "evidence": [
+        "skia-v2-animations"
+      ],
+      "check": {
+        "type": "page-contains",
+        "source": "skia-v2-animations",
+        "phrases": [
+          "Starting version 2.10 and above, this integration requires Reanimated v4 or above",
+          "For lower version numbers, you can use Reanimated v3"
+        ]
+      }
+    },
+    {
+      "id": "v3-platform-requirements",
+      "statement": "v3 requires Android API level 26 with Vulkan 1.1 and iOS 15.1, is not available in Expo Go or on Android TV, and must not be installed next to the scoped package.",
+      "basis": "documented",
+      "evidence": [
+        "skia-v3-migration",
+        "skia-v3-install"
+      ],
+      "check": {
+        "type": "page-contains",
+        "source": "skia-v3-migration",
+        "phrases": [
+          "v3 requires Android API level 26 or above",
+          "Vulkan 1.1 is a hard requirement",
+          "The minimum deployment target is iOS 15.1",
+          "Expo Go bundles the native code of v2",
+          "Android TV is not available with Graphite",
+          "stops at version 2.14"
+        ]
+      }
+    },
+    {
+      "id": "expo-58-bundle",
+      "statement": "Expo SDK 58 bundles React 19.3.0, React Native 0.88.1, scoped Skia 2.14.0, Reanimated 4.7.1, Worklets 0.13.0 and Gesture Handler ~3.3.0.",
+      "basis": "documented",
+      "evidence": [
+        "expo-bundle",
+        "expo-skia"
+      ],
+      "check": {
+        "type": "json-fields",
+        "source": "expo-bundle",
+        "fields": {
+          "react": "19.3.0",
+          "react-native": "0.88.1",
+          "@shopify/react-native-skia": "2.14.0",
+          "react-native-reanimated": "4.7.1",
+          "react-native-worklets": "0.13.0",
+          "react-native-gesture-handler": "~3.3.0"
+        }
+      }
+    },
+    {
+      "id": "gesture-handler-3.3-matrix",
+      "statement": "The Gesture Handler support table lists 3.3.x as not supporting React Native 0.88.",
+      "basis": "documented",
+      "evidence": [
+        "rngh-setup"
+      ],
+      "check": {
+        "type": "matrix-row",
+        "source": "rngh-setup",
+        "header": "0.82 0.83 0.84 0.85 0.86 0.87 0.88",
+        "row": "3.3.x no yes yes yes yes yes no"
+      }
+    },
+    {
+      "id": "gesture-handler-3.5-matrix",
+      "statement": "The Gesture Handler support table lists 3.5.x as supporting React Native 0.85 to 0.88.",
+      "basis": "documented",
+      "evidence": [
+        "rngh-setup"
+      ],
+      "check": {
+        "type": "matrix-row",
+        "source": "rngh-setup",
+        "header": "0.82 0.83 0.84 0.85 0.86 0.87 0.88",
+        "row": "3.5.x no no no yes yes yes yes"
+      }
+    },
+    {
+      "id": "reanimated-matrix",
+      "statement": "Reanimated 4.7.x supports React Native 0.86 to 0.88 with Worklets 0.13.x.",
+      "basis": "verified-locally",
+      "evidence": [
+        "rea-compat"
+      ],
+      "note": "Checked offline by npm run validate against the compatibility.json shipped in the installed package."
+    },
+    {
+      "id": "skills-cli-version",
+      "statement": "skills CLI 1.8.1 is published and was the latest release on the research date.",
+      "basis": "package-metadata",
+      "evidence": [
+        "npm-skills-cli",
+        "skills-cli"
+      ],
+      "check": {
+        "type": "npm-dist-tag",
+        "package": "skills",
+        "tag": "latest",
+        "equals": "1.8.1"
+      }
+    },
+    {
+      "id": "community-skill-unavailable",
+      "statement": "The imfa-solutions/skills repository could not be read (HTTP 404).",
+      "basis": "documented",
+      "evidence": [
+        "community-imfa"
+      ],
+      "check": {
+        "type": "status",
+        "url": "https://github.com/imfa-solutions/skills",
+        "equals": 404
+      }
+    },
+    {
+      "id": "immutable-paths",
+      "statement": "In scoped 2.14.0 and unscoped 3.10.0, SkPath has no mutating methods; geometry is assembled with Skia.PathBuilder and usePathValue passes a builder.",
+      "basis": "verified-locally",
+      "evidence": [
+        "skia-repo",
+        "skia-v2-hooks"
+      ],
+      "note": "Enforced by tests/fixtures/api/rejected/mutable-path.tsx on both majors."
+    },
+    {
+      "id": "gesture-hook-api",
+      "statement": "Gesture Handler 3.5.0 exports usePanGesture with onBegin, onActivate, onUpdate, onDeactivate and onFinalize callbacks.",
+      "basis": "verified-locally",
+      "evidence": [
+        "rngh-pan"
+      ],
+      "note": "Enforced by the DragMarker typecheck and tests/fixtures/api/rejected/gesture-builder-callbacks.tsx."
+    },
+    {
+      "id": "examples-need-no-v3-changes",
+      "statement": "The shipped examples typecheck against react-native-skia 3.10.0 after changing only the import specifier.",
+      "basis": "verified-locally",
+      "evidence": [
+        "npm-skia-unscoped",
+        "skia-v3-migration"
+      ],
+      "note": "npm run check:v3. Declarations only; no v3 runtime was exercised."
+    },
+    {
+      "id": "skills-cli-placement",
+      "statement": "skills 1.8.1 copies the skill to .agents/skills for Codex and Cursor and to .claude/skills for Claude Code in project scope.",
+      "basis": "verified-locally",
+      "evidence": [
+        "skills-cli",
+        "skills-cli-agents"
+      ],
+      "note": "npm run check:install."
+    },
+    {
+      "id": "spec-limits",
+      "statement": "The Agent Skills specification limits name to 64 characters and description to 1024, and recommends a SKILL.md under 500 lines and about 5000 tokens.",
+      "basis": "documented",
+      "evidence": [
+        "agent-skills-spec"
+      ],
+      "check": {
+        "type": "page-contains",
+        "source": "agent-skills-spec",
+        "phrases": [
+          "Max 64 characters",
+          "Max 1024 characters",
+          "Keep your main SKILL.md under 500 lines"
+        ]
+      }
+    }
+  ],
+  "conflicts": [
+    {
+      "id": "rn-minimum-for-2.14",
+      "statement": "The v2 installation page requires React Native >=0.79 while the 2.14.0 package metadata allows >=0.78.",
+      "evidence": [
+        "skia-v2-install",
+        "npm-skia-scoped"
+      ],
+      "resolution": "Both are recorded. The skill does not present 0.78 as supported; the validation baseline is 0.88.1."
+    },
+    {
+      "id": "expo-58-gesture-handler",
+      "statement": "Expo SDK 58 bundles Gesture Handler ~3.3.0 with React Native 0.88.1, but the Gesture Handler support table marks 3.3.x as not supporting 0.88 and 3.5.x as supporting it.",
+      "evidence": [
+        "expo-bundle",
+        "rngh-setup"
+      ],
+      "resolution": "Unresolved upstream. The standalone harness uses 3.5.0 because it is not an Expo project. The skill tells agents to keep an Expo project on the versions its SDK resolves and to report the discrepancy rather than upgrade."
+    }
+  ]
+}
