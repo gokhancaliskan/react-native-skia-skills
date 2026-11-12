@@ -47,6 +47,8 @@ The numbers in `tests/helpers.test.mjs` are synthetic inputs chosen to exercise 
 | `npm run check:links` | 48 of 48 links responded; one recorded-unavailable community repository is skipped by design |
 | `npm run check:v3` | 10 example files typechecked against unscoped Skia 3.10.0 with 8 import lines rewritten; fixtures behaved as expected; the scoped package was absent from that project |
 | `npm run check:install` | The skill was listed; 25 files were copied unchanged to `.agents/skills/react-native-skia` for Codex and Cursor and to `.claude/skills/react-native-skia` for Claude Code; nothing was written to the temporary home directory |
+| Remote installation from GitHub | After publication, `npx skills@1.8.1 add gokhancaliskan/react-native-skia-skills --list` listed the skill and the `--agent claude-code --copy --yes` installation copied the same 25 files, identical to the repository's skill directory, in a scratch project with a temporary home directory. Codex and Cursor were not repeated against the remote |
+| GitHub Actions | On the first pushed commit the **Validate** workflow passed and one manual **Live checks** run passed all four network checks on `ubuntu-latest` |
 
 Two defects were found by these checks while they were being built and were fixed: a reference named a `SVG` component that the package does not export (the component is `ImageSVG`), and the import scanner initially missed side-effect imports.
 
